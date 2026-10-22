@@ -1,4 +1,5 @@
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -9,8 +10,11 @@ static void
 print_usage(const char *program)
 {
     fprintf(stderr,
-            "Usage: %s [--version | --help | --run]\n",
-            program);
+            "Usage:\n"
+            "  %s --version\n"
+            "  %s --help\n"
+            "  %s -- PROGRAM [ARGS...]\n",
+            program, program, program);
 }
 
 int
@@ -27,26 +31,17 @@ main(int argc, char **argv)
         return 0;
     }
 
-    if (argc == 2 && strcmp(argv[1], "--run") == 0) {
-        fprintf(stderr, "%s: starting development event loop\n",
-                RWINIT_NAME);
+    if (argc >= 3 && strcmp(argv[1], "--") == 0) {
+        int status = rwinit_run(&argv[2]);
 
-        if (rwinit_run() < 0) {
+        if (status < 0) {
             perror("rwinit");
             return 1;
         }
 
-        fprintf(stderr, "%s: event loop stopped\n", RWINIT_NAME);
-        return 0;
+        return status;
     }
 
-    if (argc != 1) {
-        print_usage(argv[0]);
-        return 2;
-    }
-
-    printf("%s %s: project skeleton ready\n",
-           RWINIT_NAME, RWINIT_VERSION);
-
-    return 0;
+    print_usage(argv[0]);
+    return 2;
 }
