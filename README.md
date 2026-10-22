@@ -19,17 +19,20 @@ A Linux-native init manager and service supervisor written in C.
 - Python 3 (used by Meson)
 
 ## Build
-
+```bash
 meson setup build
 meson compile -C build
+```
 
 ## Test
-
+```bash
 meson test -C build --print-errorlogs
+```
 
 ## Run
-
+```bash
 ./build/rwinit --version
 ./build/rwinit --help
+```
 
 This milestone is only a project skeleton. Do not use it as PID 1.
