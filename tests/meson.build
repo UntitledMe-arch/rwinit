@@ -1,3 +1,4 @@
+
 test_version = executable(
   'test-version',
   'test_version.c',
@@ -8,7 +9,19 @@ test(
   'version',
   test_version,
 )
+test_reaper = executable(
+  'test-reaper',
+  [
+    'test_reaper.c',
+    '../src/core.c',
+  ],
+  include_directories: rwinit_inc,
+)
 
+test(
+  'child-reaping',
+  test_reaper,
+)
 test(
   'version-cli',
   rwinit,

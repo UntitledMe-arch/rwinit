@@ -15,7 +15,10 @@ rwinit_inc = include_directories('include')
 
 rwinit = executable(
   'rwinit',
-  'src/main.c',
+  [
+    'src/main.c',
+    'src/core.c',
+  ],
   include_directories: rwinit_inc,
   install: true,
 )
